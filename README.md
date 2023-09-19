@@ -1,6 +1,6 @@
 # 📦 Streamlit App Starter Kit 
 ```
-⬆️ (Replace above with your app's name)
+To be embedded into Parametriks dashboard
 ```
 
 Description of the app ...
