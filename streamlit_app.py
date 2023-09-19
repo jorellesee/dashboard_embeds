@@ -20,7 +20,6 @@ default_params = {
     'minmagnitude': 0.0  # Default minmagnitude
 }
 
-format_param = col1.text_input("Enter the format (e.g., geojson):")
 starttime_param = col1.text_input("Enter the start time (e.g., 2023-01-01):")
 maxradiuskm_param = col1.number_input("Enter the max radius in kilometers (e.g., 100):")
 minmagnitude_param = col1.number_input("Enter the minimum magnitude (e.g., 2):")
@@ -28,7 +27,7 @@ minmagnitude_param = col1.number_input("Enter the minimum magnitude (e.g., 2):")
 
 
 custom_params = {
-        'format': format_param,
+        'format': 'geojson',
         'starttime': starttime_param,
         'latitude': 37.871960,
         'longitude': -122.259094,
@@ -47,4 +46,4 @@ coordinates_list = [(feature["geometry"]["coordinates"][1], feature["geometry"][
 
 df = pd.DataFrame(coordinates_list, columns=['lat', 'lon'])
 col2.map(df)
-col2.write(coordinates_list)
+# col2.write(coordinates_list)
