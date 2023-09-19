@@ -48,3 +48,4 @@ coordinates_list = [(feature["geometry"]["coordinates"][1], feature["geometry"][
 df = pd.DataFrame(coordinates_list, columns=['lat', 'lon'])
 col2.map(df)
 col2.write(coordinates_list)
+
