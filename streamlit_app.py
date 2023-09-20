@@ -17,18 +17,25 @@ default_params = {
     'orderby': 'time',
     'minmagnitude': 0.0
 }
+prevStartTime = default_params['starttime']
+prevMaxRadius = default_params['maxradiuskm']
+prevMinMag = default_params['minmagnitude']
 
 # Create widgets for user input
 starttime_param = col1.text_input("Enter the start time (e.g., 2023-01-01):",default_params['starttime'])
 maxradiuskm_param = col1.number_input("Enter the max radius in kilometers (e.g., 100):",default_params['maxradiuskm'])
 minmagnitude_param = col1.number_input("Enter the minimum magnitude (e.g., 2):",default_params['minmagnitude'])
 
+isRefreshMap = col1.button("Refresh Map")
+if isRefreshMap:
+    col2.empty()
 # Check if any parameter has changed
 input_changed = (
-    starttime_param != default_params['starttime'] or
-    maxradiuskm_param != default_params['maxradiuskm'] or
-    minmagnitude_param != default_params['minmagnitude']
+    starttime_param != prevStartTime  or
+    maxradiuskm_param != prevMaxRadius or
+    minmagnitude_param != prevMinMag
 )
+
 
 # Update parameters with user input
 custom_params = {
@@ -38,6 +45,8 @@ custom_params = {
 }
 params = default_params.copy()
 params.update(custom_params)
+
+
 
 # Fetch earthquake data only if any parameter has changed
 if input_changed:
@@ -57,7 +66,7 @@ if input_changed:
         st.error(f"Error: Unable to fetch earthquake data. Status code {response.status_code}")
 
 
-    
+
     
 
 
