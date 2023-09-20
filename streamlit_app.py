@@ -1,12 +1,11 @@
 import streamlit as st
 import pandas as pd
 import requests
-import folium
-from streamlit_folium import folium_static
+
 
 st.set_page_config(layout="wide")
 
-col1, col2 , col3 = st.columns([1,3,1])
+col1, col2 , col3 = st.columns([1,3,2])
 
 # Default parameters
 default_params = {
