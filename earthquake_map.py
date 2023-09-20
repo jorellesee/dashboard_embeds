@@ -38,7 +38,7 @@ custom_params = {
     }
 
 params = default_params.copy()
-# params.update(custom_params)
+params.update(custom_params)
 
 base_url = "https://earthquake.usgs.gov/fdsnws/event/1/query"
 response = requests.get(base_url, params=params)
