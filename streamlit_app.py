@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import requests
+import folium
+from streamlit_folium import folium_static
 
 st.set_page_config(layout="wide")
 
@@ -48,7 +50,7 @@ if input_changed:
         coordinates_list = [(feature["geometry"]["coordinates"][1], feature["geometry"]["coordinates"][0]) for feature in data["features"]]
         cl_df = pd.DataFrame(coordinates_list, columns=['lat', 'lon'])
         col2.map(cl_df, use_container_width=True)
-        # col3.write(data)
+
         earthquakes_list = [(feature["properties"]["title"], feature["properties"]["time"], feature["properties"]["url"]) for feature in data["features"]]
         eq_df = pd.DataFrame(earthquakes_list, columns=['title','time','url'])
         col3.dataframe(eq_df)
