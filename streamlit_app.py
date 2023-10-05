@@ -4,8 +4,8 @@ import requests
 
 
 st.set_page_config(layout="wide")
-
-col1, col2 , col3 = st.columns([1,3,2])
+col1, col2 = st.columns([1,3])
+# col1, col2 , col3 = st.columns([1,3,2])
 
 # Default parameters
 default_params = {
@@ -17,6 +17,7 @@ default_params = {
     'orderby': 'time',
     'minmagnitude': 0.0
 }
+isFirstLoad = True
 prevStartTime = default_params['starttime']
 prevMaxRadius = default_params['maxradiuskm']
 prevMinMag = default_params['minmagnitude']
@@ -44,13 +45,17 @@ custom_params = {
     'minmagnitude': minmagnitude_param
 }
 params = default_params.copy()
-params.update(custom_params)
-
-
 
 # Fetch earthquake data only if any parameter has changed
-if input_changed:
+if isFirstLoad or input_changed:
     base_url = "https://earthquake.usgs.gov/fdsnws/event/1/query"
+    if input_changed:
+        params.update(custom_params)
+        prevStartTime = params['starttime']
+        prevMaxRadius = params['maxradiuskm']
+        prevMinMag = params['minmagnitude']
+    if isFirstLoad:
+        isFirstLoad = False
     response = requests.get(base_url, params=params)
 
     if response.status_code == 200:
@@ -59,9 +64,9 @@ if input_changed:
         cl_df = pd.DataFrame(coordinates_list, columns=['lat', 'lon'])
         col2.map(cl_df, use_container_width=True)
 
-        earthquakes_list = [(feature["properties"]["title"], feature["properties"]["time"], feature["properties"]["url"]) for feature in data["features"]]
-        eq_df = pd.DataFrame(earthquakes_list, columns=['title','time','url'])
-        col3.dataframe(eq_df)
+        # earthquakes_list = [(feature["properties"]["title"], feature["properties"]["time"], feature["properties"]["url"]) for feature in data["features"]]
+        # eq_df = pd.DataFrame(earthquakes_list, columns=['title','time','url'])
+        # col3.dataframe(eq_df)
     else:
         st.error(f"Error: Unable to fetch earthquake data. Status code {response.status_code}")
 
